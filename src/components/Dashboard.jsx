@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { IoSchoolSharp } from 'react-icons/io5'
 
 function Dashboard() {
-  const [currentMonth] = useState('December 2024')
+  const [currentMonth] = useState(new Date().toISOString().split('T')[0])
   const [budget] = useState({ total: 5000, spent: 3200, remaining: 1800 })
   const [showModal, setShowModal] = useState(false)
   const [showLentModal, setShowLentModal] = useState(false)

@@ -8,19 +8,40 @@ import {
   FiHelpCircle,
   FiMenu,
   FiX,
+  FiCreditCard,
+  FiActivity,
+  FiBox,
+  FiBookmark
 } from "react-icons/fi";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  // const [activeItem, setActiveItem] = useState("category");
+  const location = useLocation();  
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
   
   const menuItems = [
-    { icon: FiHome, label: "Dashboard", active: false },
-    { icon: FiUsers, label: "Users", active: false },
-    { icon: FiMessageSquare, label: "Tickets", active: true },
-    { icon: FiBarChart2, label: "Analytics", active: false },
-    { icon: FiHelpCircle, label: "Support", active: false },
-    { icon: FiSettings, label: "Settings", active: false },
+    { icon: FiHome, label: "Dashboard", id: "dashboard", active: false },
+    { icon: FiActivity, label: "Category", id: "category",active: false },
+    { icon: FiMenu, label: "Transaction Mode", id: "transaction_mode", active: false },
+    { icon: FiBox, label: "Monthly Budget", id: "budget", active: false },
+    { icon: FiBookmark, label: "Others Payment", id: "otherspayment", active: false },
+    { icon: FiCreditCard, label: "Transactions", id: "transactions", active: false },
+    { icon: FiBarChart2, label: "History", id: "history", active: false },
+    // { icon: FiHelpCircle, label: "Support", active: false },
+    // { icon: FiUsers, label: "Users", active: false },
+    // { icon: FiMessageSquare, label: "Transactions", active: false },
+    // { icon: FiSettings, label: "Settings", active: false },
   ];
+
+  // Set menuitems active state 
+  menuItems.forEach(item => { item.active = location.pathname.includes(item.id.toLowerCase()) });
+
+  const handleItemClick = (itemId) => {
+    // setActiveItem(itemId);
+    navigate(`/${itemId}`)
+  };
 
   return (
     <>
@@ -52,7 +73,10 @@ const Sidebar = () => {
             {menuItems.map((item, index) => (
               <button
                 key={index}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false)
+                  handleItemClick(item.id)
+                }}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   item.active
                     ? "bg-[var(--accent)] text-white"
